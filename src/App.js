@@ -71,7 +71,7 @@ function App() {
             </div>
         </nav>
           <Routes>
-            <Route path="/" element={<LoginPage />} />
+            <Route path="/" element={<BookcatalogPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/bookcatalog" element={<BookcatalogPage />} />
             <Route element={<PrivateRoutes />} >

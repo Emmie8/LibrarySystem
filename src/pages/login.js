@@ -109,6 +109,7 @@ function Login () {
               <span className="text"
                 >Don't have an account?
                 <p onClick={() => { SetLoginPage(!LoginPage); addActive(); }} className="text-link register-link">Register now</p>
+                <p>Forgot Password</p>
               </span>
             </div>
 

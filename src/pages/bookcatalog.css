@@ -29,6 +29,10 @@
     cursor: pointer;
 }
 
+/* #rowHeaders {
+    height: 40px;
+} */
+
 .sortBtn:hover {
     background-color: #202124;
     transition: 0.2s;

@@ -7,6 +7,32 @@ div.thumbnail {
     text-align: center;
 }
 
+div.thumbnail .hoverText {
+    color: black;
+    text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
+             1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;
+    position: absolute;		
+    top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 10;
+    opacity: 1;
+    /* transition: all 0.8s ease; */
+}
+
+div.thumbnail:hover {
+    /* opacity: 0.5; */
+    transform: scale(1.2);
+}
+
+div.thumbnail:hover .hoverText{
+    opacity: 1;
+}
+
+.bookImg:hover {
+    opacity: 0.5;
+}
+
 .booktitle {
     font-size: medium;
     max-height: 40px;
@@ -22,6 +48,7 @@ div.thumbnail {
     cursor: pointer;
 }
 
+/* Popup location */
 .popup-content {
     position: fixed;
     left: 25% !important;
@@ -36,8 +63,8 @@ div.thumbnail {
 #bookPopup {
     background-color: var(--thumbnailBg);
     box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 .popupheader {

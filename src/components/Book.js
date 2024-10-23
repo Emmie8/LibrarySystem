@@ -4,6 +4,8 @@ import React from 'react';
 import Popup from 'reactjs-popup';
 import './Book.css';
 import CheckoutServices from '../services/Checkout.services';
+import LoginPage from '../pages/login';
+import {  Link, Navigate, redirect, replace, Route, useNavigate } from 'react-router-dom';
 
 function Book (props) {
     const IsAuth = sessionStorage.getItem('AuthToken');    
@@ -28,17 +30,26 @@ function Book (props) {
         alert("Book checked out")
     }
 
+    
+
+    function LoginRedirect() {
+        console.log("redirect")
+        window.location.replace("../login")
+    }
+
     return (
         <div className="thumbnail">
             <Popup trigger={
                 <button className='bookBtn'>
                     <img
+                        className='bookImg'
                         ref={imgRef}
                         onError={onImageError}
                         src={`data:image/png;base64,${props.Image}`} 
                         alt={`book of ${props.Title}`}
                         style={{width: 140, height: "auto"}}
                     />
+                    <span className='hoverText'><h1>{props.Author}</h1><h2>{props.Genre}</h2></span>
                     <p className='booktitle'>{props.Title}</p>
                 </button> 
             } position="center center">
@@ -49,7 +60,7 @@ function Book (props) {
                         <h2>Author: {props.Author}</h2>
                         <h3>Genre: {props.Genre}</h3>
                         </div>
-                        { ((IsAuth === null) || (window.location.pathname ==='/checkout') ) ? <></> : <button onClick={() => { Checkout() }} className='addtocart'>Checkout</button> }
+                        { ((IsAuth === null) || (window.location.pathname ==='/checkout') ) ? <button onClick={() => { LoginRedirect() }} className='addtocart'>Login to Checkout</button> : <button onClick={() => { Checkout() }} className='addtocart'>Checkout</button> }
                         </div>
                         <p>
                         {props.Description}<br></br>
