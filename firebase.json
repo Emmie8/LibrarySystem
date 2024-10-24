@@ -4,6 +4,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
+    "site": "librarysystem-updated",
     "public": "build",
     "ignore": [
       "firebase.json",

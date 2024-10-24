@@ -4,8 +4,6 @@ import React from 'react';
 import Popup from 'reactjs-popup';
 import './Book.css';
 import CheckoutServices from '../services/Checkout.services';
-import LoginPage from '../pages/login';
-import {  Link, Navigate, redirect, replace, Route, useNavigate } from 'react-router-dom';
 
 function Book (props) {
     const IsAuth = sessionStorage.getItem('AuthToken');    
@@ -30,18 +28,25 @@ function Book (props) {
         alert("Book checked out")
     }
 
-    
-
     function LoginRedirect() {
         console.log("redirect")
         window.location.replace("../login")
     }
 
+    function hoverOpacityIn() {
+        document.getElementById("image").style.opacity = 0.5;
+    }
+
+    function hoverOpacityOut() {
+        document.getElementById("image").style.opacity = 1;
+    }
+
     return (
-        <div className="thumbnail">
+        <div id='bookThumbnail' className="thumbnail">
             <Popup trigger={
                 <button className='bookBtn'>
                     <img
+                        
                         className='bookImg'
                         ref={imgRef}
                         onError={onImageError}

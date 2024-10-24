@@ -5,6 +5,8 @@ div.thumbnail {
     margin-top: 25px;
     margin-bottom: 25px;
     text-align: center;
+    /* makes hover text absolute positioning work off this element instead of root */
+    position: relative; 
 }
 
 div.thumbnail .hoverText {
@@ -16,22 +18,28 @@ div.thumbnail .hoverText {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 10;
-    opacity: 1;
+    opacity: 0;
     /* transition: all 0.8s ease; */
 }
 
 div.thumbnail:hover {
     /* opacity: 0.5; */
     transform: scale(1.2);
+    
+}
+
+div.thumbnail:hover img{
+    opacity: 0.5;
+    
 }
 
 div.thumbnail:hover .hoverText{
     opacity: 1;
 }
 
-.bookImg:hover {
+/* .bookImg:hover {
     opacity: 0.5;
-}
+} */
 
 .booktitle {
     font-size: medium;
