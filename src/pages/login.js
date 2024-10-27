@@ -1,31 +1,36 @@
 import './login.css';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { UilEnvelope } from '@iconscout/react-unicons'
 import { UilLock } from '@iconscout/react-unicons'
 import { UilUser } from '@iconscout/react-unicons'
-//import CheckoutServices from '../services/Checkout.services';
 
 function Login () {
-  const [LoginPage, SetLoginPage] = useState(true);
+  const [PageState, SetPageState] = useState("login");
   const [email, SetEmail] = useState("");
   const [password, SetPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
   let navigate = useNavigate();
 
   function LoginHandler(event) {
     event.preventDefault();
     const authentication = getAuth();
-    signInWithEmailAndPassword(authentication, email, password)
-    .then((response) => {
-      const uid = authentication.currentUser.uid;
-      console.log(uid)
-      sessionStorage.setItem('userUID', uid)
-      console.log("UID saved")
-      navigate('/bookcatalog')
-      window.location.reload(1);
-      sessionStorage.setItem('AuthToken', response._tokenResponse.refreshToken)
-    })
+
+      signInWithEmailAndPassword(authentication, email, password)
+      .then((response) => {
+        const uid = authentication.currentUser.uid;
+        console.log(uid)
+        sessionStorage.setItem('userUID', uid)
+        console.log("UID saved")
+        navigate('/bookcatalog')
+        window.location.reload(1);
+        sessionStorage.setItem('AuthToken', response._tokenResponse.refreshToken)
+      })
+      .catch((error) => {
+         setLoginError(error.message)
+         console.log(loginError)
+      });
   }
 
   function RegisterHandler(event) {
@@ -44,6 +49,22 @@ function Login () {
     })
   }
 
+  function ForgotPasswordHandler(event){
+    event.preventDefault();
+    const authentication = getAuth();
+
+    sendPasswordResetEmail(authentication, email)
+    .then(() => {
+      // Password reset email sent!
+      // ..
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+  }
+
   function EmailFormHandler(event) {
     SetEmail(event.target.value);
   }
@@ -54,25 +75,38 @@ function Login () {
 
   function addActive(event) {
     const loginContainer = document.querySelector(".logincontainer");
+    // changes styling to registration form
     loginContainer.classList.add("active");
   }
+
+  function addPass(event) {
+    const loginContainer = document.querySelector(".logincontainer");
+    loginContainer.classList.add("pass");
+  }
+
+  function removePass(event) {
+    const loginContainer = document.querySelector(".logincontainer");
+    loginContainer.classList.remove("pass");
+  }
+  
 
   function removeActive(event) {
     const loginContainer = document.querySelector(".logincontainer");
     loginContainer.classList.remove("active");
   }
   
-
   return (
       <div className="loginbody">
+        <div id="google_translate_element"></div>
         <div className="logincontainer">
           <div className="forms">
             {
-              LoginPage ?
+              (PageState === "login") &&
               <div className="form login">
                 <span className="title">Login</span>
-
+                
                 <form onSubmit={LoginHandler}>
+                  {(loginError === "") ? 
                   <div className="input-field">
                     <input
                       id="txtLoginEmail"
@@ -84,7 +118,26 @@ function Login () {
                     />
                     <label htmlFor="txtLoginEmail">Email</label>
                     <div className="icon"><UilEnvelope /></div>
+                  </div>     : 
+                  <div className='loginError'>
+                    {/* <p>Wrong username or password</p>  */}
+                    {loginError}
+                    <div className="input-field">
+                      <input
+                        id="txtLoginEmail"
+                        type="email"
+                        placeholder="Enter your email"
+                        required
+                        value={email}
+                        onChange={EmailFormHandler}
+                      />
+                      <label htmlFor="txtLoginEmail">Email</label>
+                      <div className="icon"><UilEnvelope /></div>
+                    </div>
                   </div>
+                  
+                  }
+                  
 
               <div className="input-field">
                 <input
@@ -108,13 +161,14 @@ function Login () {
             <div className="login-register">
               <span className="text"
                 >Don't have an account?
-                <p onClick={() => { SetLoginPage(!LoginPage); addActive(); }} className="text-link register-link">Register now</p>
-                <p>Forgot Password</p>
+                <p onClick={() => { SetPageState("registration"); addActive();}} className="text-link register-link">Register now</p>
+                <p onClick={() => { SetPageState("forgot"); addActive();}} className="text-link forgot-link">Forgot Password</p>
               </span>
             </div>
 
           </div>
-        :
+          } 
+          { (PageState === "registration") &&
           <div className="form registration">
             <span className="title">Registration</span>
 
@@ -164,7 +218,38 @@ function Login () {
             <div className="login-register">
               <span className="text"
                 >Already have an account?
-                <p onClick={() => { SetLoginPage(!LoginPage); removeActive(); }} className="text-link login-link">Login now</p>
+                <p onClick={() => { SetPageState("login"); removeActive(); }} className="text-link login-link">Login now</p>
+              </span>
+            </div>
+          </div>
+        } {(PageState === "forgot") &&
+          <div className="form registration">
+            <span className="title">Forgot Password</span>
+
+            <form onSubmit={ForgotPasswordHandler}>
+              <div className="input-field">
+                <input
+                  id="txtRegisterEmail"
+                  type="email"
+                  placeholder="Enter your email"
+                  required
+                  value={email}
+                  onChange={EmailFormHandler}
+                />
+                {/* Change here */}
+                <label htmlFor="RegisterEmail">Email</label> 
+                <div className="icon"><UilEnvelope /></div>
+              </div>
+
+              <div className="input-field button">
+                <input id="btnRegister" type="submit" value="Submit" />
+              </div>
+            </form>
+
+            <div className="login-register">
+              <span className="text"
+                >Already have an account?
+                <p onClick={() => { SetPageState("login"); removeActive();}} className="text-link login-link">Login now</p>
               </span>
             </div>
           </div>
