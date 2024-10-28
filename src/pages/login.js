@@ -11,6 +11,7 @@ function Login () {
   const [email, SetEmail] = useState("");
   const [password, SetPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [forgotError, setForgotError] = useState("");
   let navigate = useNavigate();
 
   function LoginHandler(event) {
@@ -56,11 +57,14 @@ function Login () {
     sendPasswordResetEmail(authentication, email)
     .then(() => {
       // Password reset email sent!
-      // ..
+      setForgotError("Email sent successfully.")
+      //is empty string. fix later if actually needed.
+      // console.log(forgotError)  
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      setForgotError(errorMessage)
       // ..
     });
   }
@@ -118,10 +122,11 @@ function Login () {
                     />
                     <label htmlFor="txtLoginEmail">Email</label>
                     <div className="icon"><UilEnvelope /></div>
-                  </div>     : 
+                  </div>  
+                  : 
                   <div className='loginError'>
-                    {/* <p>Wrong username or password</p>  */}
-                    {loginError}
+                    <p className='loginErrorText'>Wrong username or password. Please try again.</p> 
+                    {/* {loginError} */}
                     <div className="input-field">
                       <input
                         id="txtLoginEmail"
@@ -162,7 +167,7 @@ function Login () {
               <span className="text"
                 >Don't have an account?
                 <p onClick={() => { SetPageState("registration"); addActive();}} className="text-link register-link">Register now</p>
-                <p onClick={() => { SetPageState("forgot"); addActive();}} className="text-link forgot-link">Forgot Password</p>
+                <p onClick={() => { SetPageState("forgot"); addPass()}} className="text-link forgot-link">Forgot Password</p>
               </span>
             </div>
 
@@ -227,20 +232,38 @@ function Login () {
             <span className="title">Forgot Password</span>
 
             <form onSubmit={ForgotPasswordHandler}>
-              <div className="input-field">
-                <input
-                  id="txtRegisterEmail"
-                  type="email"
-                  placeholder="Enter your email"
-                  required
-                  value={email}
-                  onChange={EmailFormHandler}
-                />
-                {/* Change here */}
-                <label htmlFor="RegisterEmail">Email</label> 
-                <div className="icon"><UilEnvelope /></div>
-              </div>
-
+              {(forgotError === "" ) ? 
+                <div className="input-field">
+                  <input
+                    id="txtRegisterEmail"
+                    type="email"
+                    placeholder="Enter your email"
+                    required
+                    value={email}
+                    onChange={EmailFormHandler}
+                  />
+                  {/* Change here */}
+                  <label htmlFor="RegisterEmail">Email</label> 
+                  <div className="icon"><UilEnvelope /></div>
+                </div>
+                :
+                <div className='forgotError'>
+                  <p className='forgotErrorText'>Email sent.</p>
+                  {/* {forgotError} */}
+                  <div className="input-field">
+                    <input
+                      id="txtRegisterEmail"
+                      type="email"
+                      placeholder="Enter your email"
+                      required
+                      value={email}
+                      onChange={EmailFormHandler}
+                    />
+                    <label htmlFor="RegisterEmail">Email</label> 
+                    <div className="icon"><UilEnvelope /></div>
+                  </div>
+                </div>
+              }
               <div className="input-field button">
                 <input id="btnRegister" type="submit" value="Submit" />
               </div>
@@ -249,7 +272,7 @@ function Login () {
             <div className="login-register">
               <span className="text"
                 >Already have an account?
-                <p onClick={() => { SetPageState("login"); removeActive();}} className="text-link login-link">Login now</p>
+                <p onClick={() => { SetPageState("login"); removePass()}} className="text-link login-link">Login now</p>
               </span>
             </div>
           </div>

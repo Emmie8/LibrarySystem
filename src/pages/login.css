@@ -1,5 +1,5 @@
 .loginbody{
-    height: 100vh;
+    height: 76vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,7 +20,7 @@
 .logincontainer .forms {
     display: flex;
     align-items: center;
-    height: 440px;
+    height: 460px;
     width: 200%;
     transition: height 0.2s ease;
 }
@@ -53,6 +53,11 @@
     width: 600px;
 }
 
+.logincontainer.pass .forms {
+    height: 360px; /*update height if adding confirm password*/
+    width: 600px;
+}
+
 .logincontainer.active .form {
     width: 71%;
     padding: 30px;
@@ -60,10 +65,30 @@
     transition: margin-left 0.18s ease;
 }
 
+.logincontainer.pass .form {
+    width: 71%;
+    padding: 30px;
+    background-color: var(--loginBg);
+    transition: margin-left 0.18s ease;
+}
+
+
 .logincontainer .form .title {
     position: relative;
     font-size: 27px;
     font-weight: 600;
+}
+
+.loginErrorText {
+    margin-top: 20px;
+    /* padding-top: 5px; */
+    font-weight: bold;
+}
+
+.forgotErrorText {
+    margin-top: 20px;
+    padding-left: 140px;
+    font-weight: bold;
 }
 
 .form .input-field {

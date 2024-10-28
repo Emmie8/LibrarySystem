@@ -130,28 +130,6 @@ function Bookcatalog() {
       </div> */}
       <div id="bookCatalogRow">
         {
-         ((sortOption === "genre") || (sortOption === "author")) ? 
-         
-         (
-            books.map((book, index) => {
-              return (
-                <div>
-                  {book.Genre}
-                  <Book
-                    key={book.id}
-                    Title={book.Title}
-                    Image={book.Image}
-                    Description={book.Description}
-                    Author={book.Author}
-                    Genre={book.Genre}
-                  />
-                </div>
-              );
-            })
-          )
-
-         : 
-         
          ( 
             books.map((book, index) => {
               return (
