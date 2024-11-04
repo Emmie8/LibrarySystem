@@ -13,6 +13,7 @@ import {
 	Routes,
   NavLink,
 } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const IsAuth = sessionStorage.getItem('AuthToken');
@@ -80,6 +81,7 @@ function App() {
             <Route path='*' element={<NotFound404ErrorPage />} />
           </Routes>
         </Router>
+      <ToastContainer/>
     </div>
   );
 }

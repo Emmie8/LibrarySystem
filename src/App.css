@@ -75,6 +75,11 @@ body {
   cursor: pointer;
 }
 
+
+.btn:hover{
+  text-decoration: underline;
+}
+
 .navbar {
   overflow: hidden;
   background-color: var(--navbarBg);

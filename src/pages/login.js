@@ -12,6 +12,7 @@ function Login () {
   const [password, SetPassword] = useState("");
   const [loginError, setLoginError] = useState("");
   const [forgotError, setForgotError] = useState("");
+  const [registerError, setRegisterError] = useState("");
   let navigate = useNavigate();
 
   function LoginHandler(event) {
@@ -48,6 +49,13 @@ function Login () {
       sessionStorage.setItem('AuthToken', response._tokenResponse.refreshToken)
       console.log(sessionStorage.getItem('AuthToken'))
     })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      setRegisterError(errorCode)
+      console.log(errorCode)
+      console.log(errorMessage)
+    });
   }
 
   function ForgotPasswordHandler(event){
@@ -56,16 +64,12 @@ function Login () {
 
     sendPasswordResetEmail(authentication, email)
     .then(() => {
-      // Password reset email sent!
-      setForgotError("Email sent successfully.")
-      //is empty string. fix later if actually needed.
-      // console.log(forgotError)  
+      setForgotError("Email sent successfully.") 
     })
     .catch((error) => {
-      const errorCode = error.code;
+      // const errorCode = error.code;
       const errorMessage = error.message;
       setForgotError(errorMessage)
-      // ..
     });
   }
 
@@ -144,24 +148,24 @@ function Login () {
                   }
                   
 
-              <div className="input-field">
-                <input
-                  id="txtLoginPassword"
-                  type="password"
-                  className="password"
-                  placeholder="Enter your password"
-                  required
-                  value={password}
-                  onChange={PasswordFormHandler}
-                />
-                <label htmlFor="txtLoginPassword">Password</label>
-                <div className="icon"><UilLock /></div>
-              </div>
+                  <div className="input-field">
+                    <input
+                      id="txtLoginPassword"
+                      type="password"
+                      className="password"
+                      placeholder="Enter your password"
+                      required
+                      value={password}
+                      onChange={PasswordFormHandler}
+                    />
+                    <label htmlFor="txtLoginPassword">Password</label>
+                    <div className="icon"><UilLock /></div>
+                  </div>
 
-              <div className="input-field button">
-                <input id="btnLogin" type="submit" value="Login" />
-              </div>
-            </form>
+                  <div className="input-field button">
+                    <input id="btnLogin" type="submit" value="Login" />
+                  </div>
+                </form>
 
             <div className="login-register">
               <span className="text"
@@ -178,16 +182,65 @@ function Login () {
             <span className="title">Registration</span>
 
             <form onSubmit={RegisterHandler}>
-              <div className="input-field">
-                <input 
-                  id="txtName" 
-                  type="text" 
-                  placeholder="Enter your name" 
-                  required 
-                />
-                <label htmlFor="txtName">Name</label>
-                <div className="icon"><UilUser /></div>
+              {(registerError === "") ?
+                <div className="input-field">
+                  <input 
+                    id="txtName" 
+                    type="text" 
+                    placeholder="Enter your name" 
+                    required 
+                  />
+                  <label htmlFor="txtName">Name</label>
+                  <div className="icon"><UilUser /></div>
+                </div>
+              :
+              (registerError === "auth/email-already-in-use") ?
+                <div>
+                  {/* {registerError} */}
+                  <p className='registerErrorText'>Email already in use. Please try again.</p>
+                  <div className="input-field">
+                    <input 
+                      id="txtName" 
+                      type="text" 
+                      placeholder="Enter your name" 
+                      required 
+                    />
+                    <label htmlFor="txtName">Name</label>
+                    <div className="icon"><UilUser /></div>
+                  </div>                
+                </div>
+              :
+              (registerError === "auth/weak-password") ?
+                <div>
+                  {/* {registerError} */}
+                  <p className='registerErrorText'>Password must be at least 6 characters.</p>
+                  <div className="input-field">
+                    <input 
+                      id="txtName" 
+                      type="text" 
+                      placeholder="Enter your name" 
+                      required 
+                    />
+                    <label htmlFor="txtName">Name</label>
+                    <div className="icon"><UilUser /></div>
+                  </div>                
+                </div>
+              :
+              <div>
+                {/* {registerError} */}
+                <p className='registerErrorText'>An error occured. Please try again.</p>
+                <div className="input-field">
+                  <input 
+                    id="txtName" 
+                    type="text" 
+                    placeholder="Enter your name" 
+                    required 
+                  />
+                  <label htmlFor="txtName">Name</label>
+                  <div className="icon"><UilUser /></div>
+                </div>                
               </div>
+              }
 
               <div className="input-field">
                 <input
@@ -215,6 +268,7 @@ function Login () {
                 <label htmlFor="txtRegisterPassword">Password</label>
                 <div className="icon"><UilLock /></div>
               </div>
+
               <div className="input-field button">
                 <input id="btnRegister" type="submit" value="Register" />
               </div>
@@ -242,7 +296,6 @@ function Login () {
                     value={email}
                     onChange={EmailFormHandler}
                   />
-                  {/* Change here */}
                   <label htmlFor="RegisterEmail">Email</label> 
                   <div className="icon"><UilEnvelope /></div>
                 </div>

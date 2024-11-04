@@ -91,6 +91,12 @@
     font-weight: bold;
 }
 
+.registerErrorText {
+    margin-top: 20px;
+    font-weight: bold;
+    padding-left: 30px;
+}
+
 .form .input-field {
     position: relative;
     height: 50px;
