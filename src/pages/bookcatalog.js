@@ -74,12 +74,13 @@ function Bookcatalog() {
     // console.log(searchVal)
     var search = [];
     // console.log(masterBooks)
-    for (const [ value] of masterBooks.entries()) {
-      if (value.Title.toLowerCase().includes(searchVal)){
-        search.push(value)
+    for (const value of masterBooks.entries()) {
+      // console.log(value[1])
+      if (value[1].Title.toLowerCase().includes(searchVal)){
+        search.push(value[1])
       }
-      else if (value.Author.toLowerCase().includes(searchVal)){
-        search.push(value)
+      else if (value[1].Author.toLowerCase().includes(searchVal)){
+        search.push(value[1])
       }
     }
     setBooks(search)
