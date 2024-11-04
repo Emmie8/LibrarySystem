@@ -6,6 +6,7 @@
   --darkgrey: #4D4D4D;
   --blue: #454FD9;
   --darkergrey: #202124;
+  --offblack: #121212;
 }
 
 body {
@@ -15,7 +16,7 @@ body {
 
   --bg: var(--white);
   --fontColor: var(--black);
-  --btnBg: var(--black);
+  --btnBg: var(--offblack);
   --btnFontColor: var(--white);
   --headerBg: var(--darkgreen);
   --headerFontColor: var(--white);
@@ -31,23 +32,6 @@ body {
   --loginregisterfocus: var(--grey);
   --placeholderColor: var(--grey);
 }
-
-/*.light-theme {
-  --bg: var(--white);
-  --fontColor: var(--black);
-  --btnBg: var(--black);
-  --btnFontColor: var(--white);
-  --headerBg: var(--darkgreen);
-  --headerFontColor: var(--black);
-  --navbarBg: var(--grey);
-  --navbarFontColor: var(--black);
-  --navbarHoverBg: var(--white);
-  --navbarHoverFontColor: var(--black);
-  --thumbnailBg: var(--white);
-  --loginBg: var(--white);
-  --inputFieldBg: var(--white);
-  --inputIcon: var(--grey);
-}*/
 
 .dark-theme {
   --bg: var(--darkergrey);
@@ -89,6 +73,11 @@ body {
   color: var(--btnFontColor);
   background-color: var(--btnBg);
   cursor: pointer;
+}
+
+
+.btn:hover{
+  text-decoration: underline;
 }
 
 .navbar {

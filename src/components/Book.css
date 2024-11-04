@@ -5,6 +5,34 @@ div.thumbnail {
     margin-top: 25px;
     margin-bottom: 25px;
     text-align: center;
+    /* makes hover text absolute positioning work off this element instead of root */
+    position: relative; 
+}
+
+div.thumbnail .hoverText {
+    color: black;
+    text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
+             1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;
+    position: absolute;		
+    top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 10;
+    opacity: 0;
+    /* transition: all 0.8s ease; */
+}
+
+div.thumbnail:hover {
+    transform: scale(1.2);
+}
+
+div.thumbnail:hover img{
+    opacity: 0.5;
+    
+}
+
+div.thumbnail:hover .hoverText{
+    opacity: 1;
 }
 
 .booktitle {
@@ -22,8 +50,8 @@ div.thumbnail {
     cursor: pointer;
 }
 
+/* Popup location */
 .popup-content {
-    /*top: 5% !important;*/
     position: fixed;
     left: 25% !important;
     width: 50%;
@@ -37,8 +65,8 @@ div.thumbnail {
 #bookPopup {
     background-color: var(--thumbnailBg);
     box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 .popupheader {
@@ -53,4 +81,14 @@ div.thumbnail {
     width: 90px;
     cursor: pointer;
     align-self: center;
+    border: none;
+    text-align: center;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0  rgba(0, 0, 0, 0.19);
+}
+
+.addtocart:hover {
+    background-color: #202124;
+    transition: 0.2s;
+    color: white;
 }

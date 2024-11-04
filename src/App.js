@@ -13,6 +13,7 @@ import {
 	Routes,
   NavLink,
 } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const IsAuth = sessionStorage.getItem('AuthToken');
@@ -65,13 +66,13 @@ function App() {
             }
           </div>
             <NavLink to="/bookcatalog">View eBook Catalog</NavLink>
-            { (IsAuth === null) ? <></> : <NavLink to="/checkout">Checkout</NavLink> }
+            { (IsAuth === null) ? <></> : <NavLink to="/checkout">View Checked Out Books</NavLink> }
             <div>
-              <button onClick={() => { SetDarkTheme(!theme) }} className="btn">Dark Mode</button> {/*add something here for both buttons maybe*/}
+              <button onClick={() => { SetDarkTheme(!theme) }} className="btn">Dark Mode</button>
             </div>
         </nav>
           <Routes>
-            <Route path="/" element={<LoginPage />} />
+            <Route path="/" element={<BookcatalogPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/bookcatalog" element={<BookcatalogPage />} />
             <Route element={<PrivateRoutes />} >
@@ -80,6 +81,7 @@ function App() {
             <Route path='*' element={<NotFound404ErrorPage />} />
           </Routes>
         </Router>
+      <ToastContainer/>
     </div>
   );
 }
